@@ -172,71 +172,33 @@ int main(){
         }
     }
 
-    /*int solved = 0;
-    int iter2 = 0;
-    int iter3 = 0;
-    while(solved < categories.size()){
-        iter3 = iter2%categories.size();
-        if(iter3==0){
-            solved = 0;
-
-            for(int i=0;i<categories.size();i++){
-
-                cout << "i = " << i << "; " << solving[i].size() << endl;
-                vector<string> temp = solving[i];
+    map<int,string> solved;
+    int finished = 0;
+    vector<string> found;
+    while(finished < categories.size()){
+        for(int i=0;i<categories.size();i++){
+            vector<string> temp = solving[i];
+            if(temp.size() == finished+1){
                 for(int j=0;j<temp.size();j++){
-                    cout << temp[j] << endl;
-                }
-            }
-           
-        }
-        vector<string> temp = solving[iter3];
-
-        if(temp.size() == 1){
-            solved++;
-            vector<string> myhold;
-            for(int i=0;i<categories.size();i++){
-                if(i==iter3){
-                    continue;
-                }
-                vector<string> omg = solving[i];
-                for(int j=0;j<omg.size();j++){
-                    if(omg[j]!= temp[0]){
-                        myhold.push_back(omg[j]);
+                    if(find(found.begin(),found.end(),temp[j]) == found.end()){
+                        found.push_back(temp[j]);
+                        solved[i] = temp[j];
+                        finished++;
                     }
                 }
-                solving[i] = myhold;
             }
-        }
-    }*/
-
-    for(int i=0;i<categories.size();i++){
-
-        cout << "i = " << i << "; " << solving[i].size() << endl;
-        vector<string> temp = solving[i];
-        for(int j=0;j<temp.size();j++){
-            cout << temp[j] << endl;
         }
     }
 
-    solving[0] = {"arrival track"};
-    solving[1] = {"duration"};
-    solving[2] = {"type"};
-    solving[3] = {"arrival location"};
-    solving[4] = {"price"};
-    solving[5] = {"wagon"};
-    solving[6] = {"arrival station"};
-    solving[7] = {"train"};
-    solving[8] = {"departure time"};
-    solving[9] = {"route"};
-    solving[10] = {"departure station"};
-    solving[11] = {"arrival platform"};
-    solving[12] = {"departure platform"};
-    solving[13] = {"departure track"};
-    solving[14] = {"departure date"};
-    solving[15] = {"seat"};
-    solving[16] = {"departure location"};
-    solving[17] = {"zone"};
-    solving[18] = {"class"};
-    solving[19] = {"row"};
+    unsigned long long int to_ret = 1;
+    for(int i=0;i<categories.size();i++){
+        cout << "i = " << i << "; cat = " << solved[i] << endl;
+        if(solved[i].substr(0,9) == "departure"){
+            cout << "yes" << endl;
+            to_ret = to_ret*myticket_processed[i];
+        }
+    }
+
+    cout << to_ret << endl;
+
 }
